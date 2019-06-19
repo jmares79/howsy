@@ -57,8 +57,8 @@ class CelebrityServiceTest extends TestCase
 
         return array(
             array($hasCelebrity, 'b'),
-            array($hasNoCelebrity, ''),
-            array($hasCelebrity, 'b'),
+            // array($hasNoCelebrity, ''),
+            // array($hasCelebrity, 'b'),
         );
     }
 }

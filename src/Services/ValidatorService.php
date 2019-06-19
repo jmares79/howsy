@@ -26,7 +26,7 @@ class ValidatorService
     }
 
     /**
-     * Validates the persons array
+     * Validates the persons array to be correctly created with at most 1 celebrity and set
      *
      * @param array $persons Array of persons to be checkd for celebrities
      *
@@ -34,13 +34,24 @@ class ValidatorService
      */
     public function isValidPersonInput($persons)
     {
-        if (!isset($bottles) || !isset($heights)) return false;
+        if (!isset($persons) || empty($persons)) {
+            return false;
+        }
 
-        if (count($heights) == 0) return false;
+        /**
+         * @var array with the name/id of the potential celebrities
+         */
+        $potentialCelebrities = [];
 
-        if ($bottles != count($heights)) return false;
+        foreach ($persons as $id => $person) {
+            if (count($person) == 0) {
+                $potentialCelebrities[] = $id;
+            }
+        }
 
-        if (!is_numeric($bottles)) return false;
+        if (count($potentialCelebrities) > 1) {
+            return false;
+        }
 
         return true;
     }

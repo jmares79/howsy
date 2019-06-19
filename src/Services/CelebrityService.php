@@ -12,7 +12,7 @@ class CelebrityService implements CelebrityInterface
     public function find($people)
     {
         $celebrity = '';
-        $potentialCelebrity = $this->findPotentialCelebrities($people);
+        $potentialCelebrity = $this->findPotentialCelebrity($people);
 
         if ($this->isCelebrity($people, $celebrity)) {
             $celebrities[] = $celebrity;               
@@ -29,7 +29,7 @@ class CelebrityService implements CelebrityInterface
      */
     protected function findPotentialCelebrity($people)
     {
-        /*
+        /**
          * @var array with the name/id of the potential celebrities
          */
         $potentialCelebrities = [];
