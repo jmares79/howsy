@@ -42,37 +42,50 @@ class CelebrityCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->validator->isValidInput($bottles, $heights)) {
-            $celebrities = self::DEFAULT_OUTPUT;
-        } else {
-            $bottlesThrown = $this->celebrityManager->find($heights);
+        $persons = $this->fakePersons();
+        $celebrities = [];
+
+        if ($this->validator->isValidPersonInput($persons)) {
+            $celebrities = $this->celebrityManager->find($persons);
         }
 
-        $output->writeln($bottlesThrown);
+        if (empty($celebrities)) {
+            $celebrities = self::DEFAULT_OUTPUT;
+        } else {
+            $celebrities = implode(",", $celebrities);
+        }
+
+        $output->writeln($celebrities);
     }
 
     /**
      * Method that returns fake persons array, in order to avoid the CLI parsing.
      * TODO move to a CLI argument for production purposes
      */
-    protected fakePersons()
+    protected function fakePersons()
     {
-        $person1 = array(
+        $hasCelebrity = array(
             'a' => ['b', 'c', 'd'],
             'b' => [],
             'c' => ['b', 'a'],
             'd' => ['b'],
         );
 
-        $person2 = array(
+        $hasNoCelebrity = array(
             'a' => ['b', 'c', 'd'],
             'b' => ['d'],
             'c' => ['b', 'a'],
             'd' => ['b'],
         );
-        return array(
-            $person1,
-            $person2,
+
+        $hasPotentialCelebrities = array(
+            'a' => ['b', 'c', 'd', 'e'],
+            'b' => [],
+            'c' => ['b', 'a', 'e'],
+            'd' => ['b', 'e'],
+            'e' => []
         );
+
+        return $hasCelebrity;
     }
 }
