@@ -28,7 +28,7 @@ class ValidatorService
     /**
      * Validates the persons array to be correctly created with at most 1 celebrity and set
      *
-     * @param array $persons Array of persons to be checkd for celebrities
+     * @param array $persons Array of persons to be checked for a celebrity
      *
      * @return bool
      */

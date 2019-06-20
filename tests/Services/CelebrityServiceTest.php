@@ -19,9 +19,9 @@ class CelebrityServiceTest extends TestCase
      */
     public function testFind($people, $expected)
     {
-        $celebrities = $this->celebrity->find($people);
+        $celebrity = $this->celebrity->find($people);
 
-        $this->assertEquals($celebrities, $thrownBottles);
+        $this->assertEquals($expected, $celebrity);
     }
 
     /**
@@ -38,27 +38,8 @@ class CelebrityServiceTest extends TestCase
             'd' => ['b'],
         );
 
-        $hasNoCelebrity = array(
-            'a' => ['b', 'c', 'd'],
-            'b' => ['d'],
-            'c' => ['b', 'a'],
-            'd' => ['b'],
-        );
-
-        $hasPotentialCelebrities = array(
-            'a' => ['b', 'c', 'd', 'e'],
-            'b' => [],
-            'c' => ['b', 'a', 'e'],
-            'd' => ['b', 'e'],
-            'e' => []
-        );
-
-        $emptyPeople = array();
-
         return array(
             array($hasCelebrity, 'b'),
-            // array($hasNoCelebrity, ''),
-            // array($hasCelebrity, 'b'),
         );
     }
 }

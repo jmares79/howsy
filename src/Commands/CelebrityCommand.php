@@ -10,6 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use App\Interfaces\CelebrityInterface;
 use App\Services\ValidatorService;
 
+/**
+ * Command for CLI functionality in order to find potential celebrities
+ */
 class CelebrityCommand extends Command
 {
 	// the name of the command (the part after "bin/console")
@@ -43,19 +46,17 @@ class CelebrityCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $persons = $this->fakePersons();
-        $celebrities = [];
+        $celebrity = null;
 
         if ($this->validator->isValidPersonInput($persons)) {
-            $celebrities = $this->celebrityManager->find($persons);
+            $celebrity = $this->celebrityManager->find($persons);
         }
 
-        if (empty($celebrities)) {
-            $celebrities = self::DEFAULT_OUTPUT;
-        } else {
-            $celebrities = implode(",", $celebrities);
+        if (!isset($celebrity) || empty($celebrity)) {
+            $celebrity = self::DEFAULT_OUTPUT;
         }
 
-        $output->writeln($celebrities);
+        $output->writeln($celebrity);
     }
 
     /**
