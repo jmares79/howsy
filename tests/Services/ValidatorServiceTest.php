@@ -7,6 +7,7 @@ use App\Services\ValidatorService;
 class ValidatorServiceTest extends TestCase
 {
     protected $validator;
+    const DEFAULT_OUTPUT = 'No celebrities found';
 
     public function setUp()
     {
@@ -24,6 +25,16 @@ class ValidatorServiceTest extends TestCase
     }
 
     /**
+     * @dataProvider peopleProvider
+     */
+    public function testIsValidPersonInput($person, $expected)
+    {
+        $isValid = $this->validator->isValidPersonInput($person);
+
+        $this->assertEquals($expected, $isValid);
+    }
+
+    /**
      * Test provider for testing the validator. 
      * It provides only valid inputs, as the validation occurs before the calculation happens,
      * hence for this problem is was set in the 'execute' method.
@@ -37,6 +48,45 @@ class ValidatorServiceTest extends TestCase
             array('C', array(1,1,1,1,1,1), false),
             array(null, array(1,1,1,1,1,1), false),
             array(null, null, false),
+        );
+    }
+
+    /**
+     * Test provider for testing the celebrity service. 
+     * It provides only valid inputs, as the validation occurs before the calculation happens,
+     * hence for this problem is was set in the 'execute' method.
+     */
+    public function peopleProvider()
+    {
+        $hasCelebrity = array(
+            'a' => ['b', 'c', 'd'],
+            'b' => [],
+            'c' => ['b', 'a'],
+            'd' => ['b'],
+        );
+
+        $hasNoCelebrity = array(
+            'a' => ['b', 'c', 'd'],
+            'b' => ['d'],
+            'c' => ['b', 'a'],
+            'd' => ['b'],
+        );
+
+        $hasMultipleInvalidCelebrities = array(
+            'a' => ['b', 'c', 'd', 'e'],
+            'b' => [],
+            'c' => ['b', 'a', 'e'],
+            'd' => ['b', 'e'],
+            'e' => []
+        );
+
+        $emptyPeople = array();
+
+        return array(
+            array($hasCelebrity, true),
+            array($hasNoCelebrity, true),
+            array($hasMultipleInvalidCelebrities, false),
+            array($emptyPeople, false),
         );
     }
 }
